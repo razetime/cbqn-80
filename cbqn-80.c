@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     if(b)fread(b,sizeof(char),l,f);
     fclose(f);
   }
-  float m;
+  float m=100;
   if(argc>2) m=atof(argv[2]);
    
   bqn_init();
@@ -42,21 +42,22 @@ int main(int argc, char* argv[]) {
     &renderer); 
   SDL_Texture *Screen = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
     SDL_TEXTUREACCESS_STREAMING, WINDOW_WIDTH, WINDOW_HEIGHT);
-  
+
+  int l=SDL_GetTicks();
   while(k<m){
+    if(SDL_GetTicks()-l<33) continue; // desired fps is around 30.
+    l=SDL_GetTicks();
     x=bqn_call2(g,w,x);
     uint32_t* a=malloc(WINDOW_HEIGHT*WINDOW_WIDTH*sizeof(uint32_t)); 
     bqn_readI32Arr(x,a);
     for(int i=0;i<WINDOW_HEIGHT*WINDOW_WIDTH;i++){a[i]=c[a[i]&0x0000000f];}               
     SDL_RenderClear(renderer);
     SDL_UpdateTexture(Screen,NULL,a,WINDOW_WIDTH*sizeof(uint32_t));
-    SDL_Rect r;
-    r.x=0;r.y=0;r.w=240;r.h=136;
-    SDL_RenderCopy(renderer,Screen,NULL,&r);
+    SDL_RenderCopy(renderer,Screen,NULL,NULL);
     SDL_RenderPresent(renderer);
     k+=1;
+    w=bqn_makeF64(k);
   }
-  //SDL_Delay(3000);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyTexture(Screen);
   SDL_DestroyWindow(window);
