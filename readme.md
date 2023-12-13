@@ -1,5 +1,7 @@
 C Implementation of [BQN-80](https://dancek.github.io/bqn-80/).
 
+Attempts to cap animation at 30fps.
+
 Installation: `make`
 
 Dependencies:
