@@ -7,5 +7,6 @@ Installation: `make`
 Dependencies:
 - `pkg-config` for finding SDL
 - SDL2
+- SDL2_image
 - `libcbqn.so` in your library path
 - `bqnffi.h` in your include path
