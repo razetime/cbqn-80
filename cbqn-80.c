@@ -34,8 +34,8 @@ int main(int argc, char* argv[]) {
     fseek(f,0,SEEK_END);
     long l=ftell(f);
     fseek(f,0,SEEK_SET);
-    b=malloc(l*sizeof(char));
-    if(b)fread(b,sizeof(char),l,f);
+    b=malloc((l+1)*sizeof(char));
+    if(b){fread(b,sizeof(char),l,f);b[l]=0;}
     fclose(f);
   }
   float m=30;
